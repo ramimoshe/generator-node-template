@@ -47,11 +47,8 @@ describe('message service', () => {
 					prefix: "world"
 				}
 			}
-			messageHandlers.handleSetPrefix(handlerParameter)
-				.then((message) => {
-					expect(message, "hello world");
-					done();
-				});
+			messageHandlers.handleSetPrefix(handlerParameter);
+			done();
 		});
 	});
 });
