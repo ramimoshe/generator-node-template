@@ -28,6 +28,18 @@ exports.addAuthentication = (hapiServer, config) => {
 	});
 };
 
+exports.addRoutesPlugin = (hapiServer, routesPlugin, pathPrefix) => {
+	const register = Promise.promisify(hapiServer.register).bind(hapiServer);
+
+	return register({
+		register: routesPlugin
+	}, {
+		routes: {
+			prefix: '/' + pathPrefix
+		}
+	});
+}
+
 exports.addLogging = (hapiServer) => {
 	return Promise.try(() => {
 		hapiServer.on('request', (request, event, tags) => {

@@ -1,7 +1,7 @@
 {
   "service": {
     "http": {
-      "port": 1234
+      "port": 2222
     },
     "useAuth": false
   }

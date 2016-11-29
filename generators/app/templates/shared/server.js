@@ -1,11 +1,11 @@
 'use strict';
 
-const Promise        = require('bluebird');
-const config         = require('config');
-const Hapi           = require('hapi');
-const logger         = require('./infrastructure/logger');
-const endpoints      = require('./endpoints');
-const hapiExtensions = require('./infrastructure/hapi/extentions');
+const Promise           = require('bluebird');
+const config            = require('config');
+const Hapi              = require('hapi');
+const logger            = require('./infrastructure/logger');
+const productsEndpoints = require('./endpoints/products');
+const hapiExtensions    = require('./infrastructure/hapi/extentions');
 
 
 function convertConfigToJson(configSection) {
@@ -26,11 +26,12 @@ function initHttpServer(hapiServer) {
 		labels: ['api']
 	});
 
-	const docsConfig = convertConfigToJson(config.docs);
-	endpoints.addAllRoutes(apiConnection);
+	const docsConfig   = convertConfigToJson(config.docs);
+	const routesPrefix = 'api';
 
 	return Promise.all([
-		hapiExtensions.addAuthentication(apiConnection, getAuthenticationConfig())
+		hapiExtensions.addRoutesPlugin(apiConnection, productsEndpoints, routesPrefix)
+			.then(() => hapiExtensions.addAuthentication(apiConnection, getAuthenticationConfig()))
 			.then(() => hapiExtensions.addLogging(apiConnection))
 			.then(() => hapiExtensions.addMoreErrorsDetailsInResponse(apiConnection, config.includeStackOnErrorResponse))
 			.then(() => hapiExtensions.addSwagger(apiConnection, docsConfig))

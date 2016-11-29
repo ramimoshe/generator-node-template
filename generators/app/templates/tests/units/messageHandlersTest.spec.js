@@ -1,6 +1,6 @@
 'use strict';
 
-const messageHandlers = require('../../lib/logic/messageHandlers');
+const messageHandlers = require('../../shared/logic/messageHandlers');
 
 
 describe('message service', () => {

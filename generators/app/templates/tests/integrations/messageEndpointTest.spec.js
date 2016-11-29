@@ -2,7 +2,7 @@
 
 const rp     = require('request-promise');
 const config = require('config');
-const server = require('../../lib/server');
+const server = require('../../shared/server');
 
 
 describe('message service', () => {
