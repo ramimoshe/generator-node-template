@@ -1,6 +1,6 @@
 'use strict';
-
-const productsRepository = require('../data/products');
+const uuid               = require('uuid');
+const productsRepository = require('../data').products;
 
 exports.get = (param) => {
 	return productsRepository.get(param.params.id);
@@ -8,7 +8,7 @@ exports.get = (param) => {
 
 exports.create = (param) => {
 	return productsRepository.create({
-		id  : param.body.id,
+		id : uuid.v4(),
 		name: param.body.name,
 	});
 };

@@ -8,6 +8,7 @@ function convertRequestToHandlerParameter(request) {
 	return {
 		body          : request.payload,
 		params        : request.params,
+		query         : request.query,
 		headers       : request.headers,
 		authentication: request.authentication
 	};
@@ -79,7 +80,6 @@ exports.register = function (server, options, next) {
 	});
 
 	next();
-
 };
 
 exports.register.attributes = {

@@ -4,5 +4,6 @@
       "port": 2222
     },
     "useAuth": false
-  }
+  },
+  "database": "mongodb://localhost/my_database"
 }

@@ -6,6 +6,7 @@ const Hapi              = require('hapi');
 const logger            = require('./infrastructure/logger');
 const productsEndpoints = require('./endpoints/products');
 const hapiExtensions    = require('./infrastructure/hapi/extentions');
+const db                = require('./data');
 
 
 function convertConfigToJson(configSection) {
@@ -42,6 +43,7 @@ exports.run = () => {
 	const hapiServer = new Hapi.Server();
 
 	return Promise.all([
+		db.init(config.database),
 		initHttpServer(hapiServer) // EntryPoint to init components before server start
 	]).then(() => {
 		hapiServer.start(() => {

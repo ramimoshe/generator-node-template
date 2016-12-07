@@ -1,7 +1,7 @@
 'use strict';
 
-const pkg  = require('../../../package.json');
 const Boom = require('boom');
+const pkg  = require('../../../package.json');
 
 const SCHEMA_NAME = 'verifyToken';
 const internals   = {};

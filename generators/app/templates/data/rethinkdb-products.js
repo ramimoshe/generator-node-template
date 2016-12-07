@@ -1,13 +1,23 @@
-const logger    = require('../infrastructure/logger');
+'use strict';
+
+const Promise   = require('bluebird');
 const Boom      = require('boom');
-const r         = require('rethinkdbdash')();
+const logger    = require('../infrastructure/logger');
 const dbHelpers = require('./dbHelpers');
 
 
 const TABLE_NAME = 'products';
 
-exports.ensureTable = () => {
+let r = {};
+
+function ensureTable() {
 	return dbHelpers.ensureTable(r, TABLE_NAME);
+}
+
+exports.init = (r) => {
+	this.r = r;
+
+	return ensureTable();
 }
 
 exports.get = (id) => {

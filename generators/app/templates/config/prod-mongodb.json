@@ -3,5 +3,6 @@
     "http": {
       "port": 8080
     }
-  }
+  },
+  "database": "mongodb://localhost/my_database"
 }

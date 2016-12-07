@@ -1,0 +1,16 @@
+{
+  "service": {
+    "http": {
+      "port": 8080
+    }
+  },
+  "database": {
+    "db": "local_v2",
+    "servers": [
+      {
+        "host": "localhost",
+        "port": 28015
+      }
+    ]
+  }
+}

@@ -40,7 +40,7 @@ npm install -g yo
 
 Install the generator globally
 ```sh
-npm install -g generator-express
+npm install -g NodeJs-Service-Generator
 ```
 
 Run: nodejs-gen and choose your preferences

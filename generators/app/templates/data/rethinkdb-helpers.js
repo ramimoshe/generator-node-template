@@ -1,3 +1,8 @@
+'use strict';
+
+const Promise = require('bluebird');
+
+
 function deleteDuplicateTables(r, tableName) {
 	return r.db('rethinkdb').table('current_issues').filter({
 		type: 'table_name_collision',
