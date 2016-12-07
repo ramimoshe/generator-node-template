@@ -1,11 +1,11 @@
-# Node.js service template generator
+# Pug
 
 A Node.js service template generator for Yeoman based on [Hapi.js][hapijs].
 
 ### Tech
 ##### Database Options
   - [Rethinkdb][rethinkdb] with [RethinkDbDash][rethinkdbdash] as a node.js driver
-  - [MongoDB][mongodb] with [node-mongodb-native][mongodb-driver] as a node.js driver
+  - [MongoDB][mongodb] with [mongoose][mongodb-driver] as a node.js driver
 
 ##### Lint Options
   - [ESLint][eslint]
@@ -43,9 +43,9 @@ Install the generator globally
 npm install -g NodeJs-Service-Generator
 ```
 
-Run: nodejs-gen and choose your preferences
+Run: pug and choose your preferences
 ```sh
-yo nodejs-gen
+yo pug
 ```
 
 ### Q&A
@@ -61,7 +61,7 @@ yo nodejs-gen
    ```sh
    npm start
    ```
-- [How to work with several environemtn with config module][config-files]
+- [How to work with several environment with config module][config-files]
 
 ### Development
 
