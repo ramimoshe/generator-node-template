@@ -2,7 +2,7 @@
 
 const rp     = require('request-promise');
 const config = require('config');
-const server = require('../../shared/server');
+const server = require('../../lib/server');
 
 
 describe('message service', () => {
@@ -29,9 +29,9 @@ describe('message service', () => {
 		it('should return valid message', (done) => {
 
 			const options = {
-				uri : 'http://localhost:1234/world',
+				uri   : 'http://localhost:1234/world',
 				method: 'GET',
-				json: true
+				json  : true
 			};
 			return rp(options)
 				.then((body) => {
@@ -48,12 +48,12 @@ describe('message service', () => {
 		it('set valid prefix - no error', (done) => {
 
 			const options = {
-				uri : 'http://localhost:1234/',
+				uri   : 'http://localhost:1234/',
 				method: 'POST',
-				body: {
+				body  : {
 					prefix: 'hello test '
 				},
-				json: true
+				json  : true
 			};
 
 			return rp(options)
@@ -91,12 +91,12 @@ describe('message service with authentication', () => {
 		it('should return valid message', (done) => {
 
 			const options = {
-				uri : 'http://localhost:1234/world',
+				uri    : 'http://localhost:1234/world',
 				headers: {
 					authorization: '123'
 				},
-				method: 'GET',
-				json: true
+				method : 'GET',
+				json   : true
 			};
 			return rp(options)
 				.then((body) => {
@@ -113,15 +113,15 @@ describe('message service with authentication', () => {
 		it('set valid prefix - no error', (done) => {
 
 			const options = {
-				uri : 'http://localhost:1234/',
+				uri    : 'http://localhost:1234/',
 				headers: {
 					authorization: '123'
 				},
-				method: 'POST',
-				body: {
+				method : 'POST',
+				body   : {
 					prefix: 'hello test '
 				},
-				json: true
+				json   : true
 			};
 
 			return rp(options)

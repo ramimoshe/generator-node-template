@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "npm i && node --use_strict node_modules/.bin/istanbul cover --report cobertura node_modules/.bin/jasmine JASMINE_CONFIG_PATH=jasmine.json",
+    "test": "npm i && node --use_strict node_modules/.bin/istanbul cover --report cobertura node_modules/.bin/jasmine JASMINE_CONFIG_PATH=tests/jasmine.json",
     "lint": "node node_modules/eslint/bin/eslint.js .",
     "start": "node index.js"
   },
@@ -20,14 +20,12 @@
     "joi": "^9.2.0",
     "lodash": "^4.17.2",
     "request-promise": "^4.1.1",
-    "uuid": "^2.0.3",
-    <%- db%>
+    "uuid": "^2.0.3",<%- db%>
     "vision": "^4.1.0",
     "winston": "^2.3.0"
   },
   "devDependencies": {
-    <%- lint%>
-    "istanbul": "^0.4.5",
+    <%- lint%>"istanbul": "^0.4.5",
     "jasmine": "^2.5.2",
     "sinon": "^1.17.6"
   }

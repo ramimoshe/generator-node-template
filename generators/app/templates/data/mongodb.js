@@ -2,15 +2,17 @@
 
 const Promise  = require('bluebird');
 const mongoose = require('mongoose');
-const products = require('./products');
+const Product  = require('./Product');
+
+const product = new Product();
 
 exports.init = (connectionConfig) => {
 	mongoose.Promise = require('bluebird');
 	mongoose.connect(connectionConfig);
 
 	return Promise.all([
-		products.init(mongoose)
+		product.init(mongoose)
 	]);
 }
 
-exports.products = products;
+exports.product = product;

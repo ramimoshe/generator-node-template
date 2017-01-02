@@ -28,7 +28,7 @@ function initHttpServer(hapiServer) {
 	});
 
 	const docsConfig   = convertConfigToJson(config.docs);
-	const routesPrefix = 'api';
+	const routesPrefix = 'api/products';
 
 	return Promise.all([
 		hapiExtensions.addRoutesPlugin(apiConnection, productsEndpoints, routesPrefix)

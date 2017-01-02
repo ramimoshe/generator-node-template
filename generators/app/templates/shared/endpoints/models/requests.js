@@ -27,7 +27,7 @@ exports.createProduct = {
 exports.searchProducts = {
 	headers: headersSchema(),
 	query  : {
-		name: Joi.string().min(1).max(50).optional().default(20)
+		name: Joi.string().min(1).max(50).optional()
 			.description('name of product')
 	}
 }

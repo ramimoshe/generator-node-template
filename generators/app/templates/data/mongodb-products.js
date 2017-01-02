@@ -1,55 +1,72 @@
 'use strict';
 
 const Promise = require('bluebird');
+const _       = require('lodash');
 
 const MODEL_NAME = 'Product';
 
-let Product = {};
+class Product {
 
-function createSchema(mongoos) {
-	const productSchema = new mongoos.Schema({
-		_id : String,
-		name: String
-	});
+	convertResponse(documentPromise) {
+		return documentPromise.then((document) => {
+			return _.omit(document, '__v');
+		})
 
-	productSchema.statics.findById = function findById(id, callback) {
-		return this.findOne({ _id: id }, callback);
 	}
 
-	productSchema.statics.findByName = function findByName(name, callback) {
-		return this.find({ name: name }, callback);
+	createSchema(mongoos) {
+		const productSchema = new mongoos.Schema({
+			_id : String,
+			name: String
+		});
+
+		productSchema.statics.findById = function findById(id, callback) {
+			return this.findOne({ _id: id }, callback);
+		}
+
+		productSchema.statics.findByName = function findByName(name, callback) {
+			return this.find({ name: name }, callback);
+		}
+
+		productSchema.statics.findAll = function findAll(callback) {
+			return this.find({}, callback);
+		}
+
+		return productSchema;
 	}
 
-	productSchema.statics.findAll = function findAll(callback) {
-		return this.find({}, callback);
+	init(mongoose) {
+		this.product = mongoose.model(MODEL_NAME, this.createSchema(mongoose));
+
+		return Promise.resolve();
 	}
 
-	return productSchema;
+	get(id) {
+		const query = this.product.findById(id);
+
+		return this.convertResponse(query.exec());
+	}
+
+	getAll() {
+		const query = this.product.findAll();
+
+		return this.convertResponse(query.exec());
+	}
+
+	searchByName(name) {
+		const query = this.product.findByName(name);
+
+		return this.convertResponse(query.exec());
+	}
+
+	create(product) {
+		const productDal = new this.product({
+			_id : product.id,
+			name: product.name
+		});
+
+		return this.convertResponse(productDal.save());
+	}
 }
 
-exports.init = (mongoose) => {
-	Product = mongoose.model(MODEL_NAME, createSchema(mongoose));
-
-	return Promise.resolve();
-}
-
-exports.get = (id) => {
-	return Product.findById(id).exec();
-}
-
-exports.getAll = () => {
-	return Product.findAll().exec();
-}
-
-exports.searchByName = (name) => {
-	return Product.findByName(name).exec();
-}
-
-exports.create = (product) => {
-	const productDal = new Product({
-		_id  : product.id,
-		name: product.name
-	});
-
-	return productDal.save();
-}
+module.exports = Product;

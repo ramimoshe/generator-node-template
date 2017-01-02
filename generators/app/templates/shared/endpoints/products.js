@@ -27,6 +27,7 @@ function handle(handler, request, reply) {
 }
 
 exports.register = function (server, options, next) {
+	const products = new productsHandler();
 
 	server.route({
 		path  : '/{id}',
@@ -40,7 +41,7 @@ exports.register = function (server, options, next) {
 				'hapi-swagger': responses.getProduct
 			},
 			handler    : (request, reply) => {
-				return handle(productsHandler.get, request, reply);
+				return handle(products.get.bind(products), request, reply);
 			}
 		}
 	});
@@ -57,7 +58,7 @@ exports.register = function (server, options, next) {
 				'hapi-swagger': responses.searchProducts
 			},
 			handler    : (request, reply) => {
-				return handle(productsHandler.search, request, reply);
+				return handle(products.search.bind(products), request, reply);
 			}
 		}
 	});
@@ -74,7 +75,7 @@ exports.register = function (server, options, next) {
 				'hapi-swagger': responses.default
 			},
 			handler    : (request, reply) => {
-				return handle(productsHandler.create, request, reply);
+				return handle(products.create.bind(products), request, reply);
 			}
 		}
 	});

@@ -9,7 +9,7 @@ const dbHelpers = require('./dbHelpers');
 const TABLE_NAME = 'products';
 
 let r = {};
-
+//TODO: update to class
 function ensureTable() {
 	return dbHelpers.ensureTable(r, TABLE_NAME);
 }

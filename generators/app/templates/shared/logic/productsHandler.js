@@ -1,22 +1,30 @@
 'use strict';
-const uuid               = require('uuid');
-const productsRepository = require('../data').products;
+const uuid = require('uuid');
 
-exports.get = (param) => {
-	return productsRepository.get(param.params.id);
-};
+class productsHandler {
 
-exports.create = (param) => {
-	return productsRepository.create({
-		id : uuid.v4(),
-		name: param.body.name,
-	});
-};
-
-exports.search = (param) => {
-	if (param.query && param.query.name && param.query.name != '') {
-		return productsRepository.searchByName(param.query.name);
+	constructor(productsRepository) {
+		this.productsRepository = productsRepository || require('../data').product;
 	}
 
-	return productsRepository.getAll();
+	get(param) {
+		return this.productsRepository.get(param.params.id);
+	}
+
+	create(param) {
+		return this.productsRepository.create({
+			id  : uuid.v4(),
+			name: param.body.name,
+		});
+	}
+
+	search(param) {
+		if (param.query && param.query.name && param.query.name != '') {
+			return this.productsRepository.searchByName(param.query.name);
+		}
+
+		return this.productsRepository.getAll();
+	}
 }
+
+module.exports = productsHandler;

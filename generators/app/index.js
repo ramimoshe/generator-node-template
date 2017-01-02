@@ -6,30 +6,21 @@ const generators = require('yeoman-generator');
 module.exports = generators.Base.extend({
 	constructor: function () {
 		generators.Base.apply(this, arguments);
-
-		// add option to skip install
-		//this.option('skip-install');
 	},
 	prompting  : {
-		dirname : function () {
-			if (this.options.createDirectory) {
-				return true;
-			}
+		dirname            : function () {
 
 			var prompt = [{
 				type   : 'input',
 				name   : 'dirname',
-				message: 'Enter directory name'
+				message: 'Enter directory name (default: pug)'
 			}];
 
 			return this.prompt(prompt).then(function (response) {
-				this.options.dirname = response.dirname;
+				this.options.dirname = response.dirname || "pug";
 			}.bind(this));
 		},
-		database: function () {
-			if (this.options.database) {
-				return true;
-			}
+		database           : function () {
 
 			var prompt = [{
 				type   : 'list',
@@ -47,31 +38,19 @@ module.exports = generators.Base.extend({
 				this.options.database = response.database.toLowerCase();
 			}.bind(this));
 		},
-		lint    : function () {
-			if (this.options.lint) {
-				return true;
-			}
+		eslint             : function () {
 
 			var prompt = [{
-				type   : 'list',
-				name   : 'lint',
-				message: 'Select a lint to use:',
-				choices: [
-					'None',
-					'EsLint',
-					'LintJs'
-				],
-				store  : true
+				type   : 'confirm',
+				name   : 'eslint',
+				message: 'Do you want to use ESLint:'
 			}];
 
 			return this.prompt(prompt).then(function (response) {
-				this.options.lint = response.lint.toLowerCase();
+				this.options.eslint = response.eslint;
 			}.bind(this));
 		},
-		docker  : function () {
-			if (this.options.docker) {
-				return true;
-			}
+		docker             : function () {
 
 			const prompt = [{
 				type   : 'confirm',
@@ -81,6 +60,18 @@ module.exports = generators.Base.extend({
 
 			return this.prompt(prompt).then(function (response) {
 				this.options.docker = response.docker;
+			}.bind(this));
+		},
+		installDependencies: function () {
+
+			const prompt = [{
+				type   : 'confirm',
+				name   : 'installDependencies',
+				message: 'Do you want to install dependencies:'
+			}];
+
+			return this.prompt(prompt).then(function (response) {
+				this.options.installDependencies = response.installDependencies;
 			}.bind(this));
 		}
 	},
@@ -94,7 +85,7 @@ module.exports = generators.Base.extend({
 			copyDbFiles.call(this, this.options.database);
 			copyConfigFiles.call(this, this.options);
 			copyDocker.call(this, this.options.docker);
-			copyLint.call(this, this.options.lint);
+			copyLint.call(this, this.options.eslint);
 			copyPackageJson.call(this, this.options);
 
 		},
@@ -102,7 +93,9 @@ module.exports = generators.Base.extend({
 		}
 	},
 	install    : function () {
-		this.installDependencies();
+		if (this.options.installDependencies) {
+			this.installDependencies();
+		}
 	}
 });
 
@@ -208,8 +201,7 @@ function copyDbFiles(dbOptions) {
 }
 
 function copyLint(lintOptions) {
-	console.log(lintOptions);
-	if (lintOptions === 'eslint') {
+	if (lintOptions) {
 		this.fs.copy(
 			this.templatePath('eslint/.eslintignore'),
 			this.destinationPath('.eslintignore')
@@ -222,19 +214,18 @@ function copyLint(lintOptions) {
 }
 
 function copyPackageJson(options) {
-
 	let lintPackages = '';
-	if (options.lint === 'eslint') {
-		lintPackages = '\"eslint\": \"^3.10.2\",' + '\n' + '    \"eslint-config-airbnb\": \"^13.0.0\",' + '\n' + '    \"eslint-plugin-react\": \"^6.7.1\",';
+	if (options.eslint) {
+		lintPackages = '\n' + '\"eslint\": \"^3.10.2\",' + '\n' + '    \"eslint-config-airbnb\": \"^13.0.0\",' + '\n' + '    \"eslint-plugin-react\": \"^6.7.1\",';
 	}
 
 	let dbPackages = '';
 	if (options.database === 'mongodb') {
-		dbPackages = '\"mongoose\": \"^4.7.1\",'
+		dbPackages = '\n' + '\"mongoose\": \"^4.7.1\",'
 	}
 
 	if (options.database === 'rethinkdb') {
-		dbPackages = '\"rethinkdbdash\": \"2.2.18\",'
+		dbPackages = '\n' + '\"rethinkdbdash\": \"2.2.18\",'
 	}
 
 	this.fs.copyTpl(
