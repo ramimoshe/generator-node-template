@@ -8,16 +8,16 @@ module.exports = generators.Base.extend({
 		generators.Base.apply(this, arguments);
 	},
 	prompting  : {
-		dirname            : function () {
+		appName            : function () {
 
 			var prompt = [{
 				type   : 'input',
-				name   : 'dirname',
-				message: 'Enter directory name (default: pug)'
+				name   : 'appName',
+				message: 'Enter app name (default: pug)'
 			}];
 
 			return this.prompt(prompt).then(function (response) {
-				this.options.dirname = response.dirname || "pug";
+				this.options.appName = response.appName || "pug";
 			}.bind(this));
 		},
 		database           : function () {
@@ -62,6 +62,17 @@ module.exports = generators.Base.extend({
 				this.options.docker = response.docker;
 			}.bind(this));
 		},
+		pm2                : function () {
+			const prompt = [{
+				type   : 'confirm',
+				name   : 'pm2',
+				message: 'Do you want to use pm2:'
+			}];
+
+			return this.prompt(prompt).then(function (response) {
+				this.options.pm2 = response.pm2;
+			}.bind(this));
+		},
 		installDependencies: function () {
 
 			const prompt = [{
@@ -79,12 +90,13 @@ module.exports = generators.Base.extend({
 		buildEnv  : function () {
 
 			// create directory
-			this.destinationRoot(this.options.dirname);
+			this.destinationRoot(this.options.appName);
 
 			copyServiceFiles.call(this);
 			copyDbFiles.call(this, this.options.database);
 			copyConfigFiles.call(this, this.options);
 			copyDocker.call(this, this.options.docker);
+			copyPm2.call(this, this.options.pm2, this.options.appName);
 			copyLint.call(this, this.options.eslint);
 			copyPackageJson.call(this, this.options);
 
@@ -167,8 +179,8 @@ function copyDbFiles(dbOptions) {
 			this.destinationPath('lib/data/dbHelpers.js')
 		);
 		this.fs.copy(
-			this.templatePath('data/rethinkdb-products.js'),
-			this.destinationPath('lib/data/products.js')
+			this.templatePath('data/rethinkdb-product.js'),
+			this.destinationPath('lib/data/Product.js')
 		);
 		this.fs.copy(
 			this.templatePath('config/development-rethinkdb.json'),
@@ -186,8 +198,8 @@ function copyDbFiles(dbOptions) {
 			this.destinationPath('lib/data/index.js')
 		);
 		this.fs.copy(
-			this.templatePath('data/mongodb-products.js'),
-			this.destinationPath('lib/data/products.js')
+			this.templatePath('data/mongodb-product.js'),
+			this.destinationPath('lib/data/Product.js')
 		);
 		this.fs.copy(
 			this.templatePath('config/development-mongodb.json'),
@@ -196,6 +208,16 @@ function copyDbFiles(dbOptions) {
 		this.fs.copy(
 			this.templatePath('config/prod-mongodb.json'),
 			this.destinationPath('config/prod.json')
+		);
+	}
+}
+
+function copyPm2(pm2Options, appName) {
+	if (pm2Options) {
+		this.fs.copyTpl(
+			this.templatePath('pm2/ecosystem.json'),
+			this.destinationPath('ecosystem.json'),
+			{ app_name: appName }
 		);
 	}
 }

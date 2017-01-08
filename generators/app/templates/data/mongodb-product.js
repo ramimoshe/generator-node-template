@@ -8,10 +8,16 @@ const MODEL_NAME = 'Product';
 class Product {
 
 	convertResponse(documentPromise) {
+		// omit mongo doc version from the result
 		return documentPromise.then((document) => {
-			return _.omit(document, '__v');
-		})
+			if (_.isArray(document)) {
+				return _.map(document, (item) => {
+					return _.omit(item._doc, '__v');
+				});
+			}
 
+			return _.omit(document._doc, '__v');
+		});
 	}
 
 	createSchema(mongoos) {
