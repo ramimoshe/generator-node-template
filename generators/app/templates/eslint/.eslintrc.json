@@ -1,0 +1,43 @@
+{
+  "env": {
+    "es6": true,
+    "node": true
+  },
+
+  "extends": "airbnb/base",
+  "parserOptions": {
+    "sourceType": ""
+  },
+  "rules": {
+    "no-multi-spaces": ["error", { "exceptions": { "VariableDeclarator": true, "AssignmentExpression": true, "Property": true } }],
+    "key-spacing": "off",
+    "comma-dangle": ["error", "never"],
+    "max-len": [2, 180, 2, {
+      "ignoreUrls": true,
+      "ignoreComments": false
+    }],
+    "arrow-body-style": "off",
+    "no-param-reassign": "off",
+    "object-shorthand": "off",
+    "newline-per-chained-call": "off",
+    "no-restricted-syntax": ["error", "FunctionExpression", "WithStatement"],
+    "no-tabs": "off",
+    "indent": [
+      "error",
+      "tab",
+      { "SwitchCase": 1 }
+    ],
+    "linebreak-style": [
+      "error",
+      "unix"
+    ],
+    "quotes": [
+      "error",
+      "single"
+    ],
+    "semi": [
+      "error",
+      "always"
+    ]
+  }
+}

@@ -1,33 +1,42 @@
 {
-  "name": "NodeJs-Service-Template",
-  "version": "1.0.0",
+  "name": "generator-node-template",
+  "version": "0.0.4",
   "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "npm i && node --use_strict node_modules/.bin/istanbul cover --report cobertura node_modules/.bin/jasmine JASMINE_CONFIG_PATH=jasmine.json",
-    "lint": "node node_modules/eslint/bin/eslint.js ."
+  "homepage": "",
+  "author": {
+    "name": "Rami Moshe",
+    "email": "rms.rami.m@gmail.com",
+    "url": ""
   },
-  "author": "",
-  "license": "ISC",
+  "files": [
+    "generators"
+  ],
+  "main": "generators/index.js",
+  "keywords": [
+    "node.js",
+    "nodejs",
+    "template",
+    "yeoman-generator"
+  ],
   "dependencies": {
-    "bluebird": "^3.4.6",
-    "boom": "^4.2.0",
-    "config": "^1.24.0",
-    "hapi": "^15.2.0",
-    "hapi-swagger": "^7.4.0",
-    "inert": "^4.0.2",
-    "joi": "^9.2.0",
-    "lodash": "^4.17.2",
-    "request": "^2.78.0",
-    "request-promise": "^4.1.1",
-    "vision": "^4.1.0",
-    "winston": "^2.3.0"
+    "yeoman-generator": "^0.23.0",
+    "chalk": "^1.0.0",
+    "yosay": "^1.0.0"
   },
   "devDependencies": {
-    "eslint": "^3.10.2",
+    "yeoman-test": "^1.0.0",
+    "yeoman-assert": "^2.0.0",
     "eslint-config-airbnb": "^13.0.0",
     "eslint-plugin-react": "^6.7.1",
-    "istanbul": "^0.4.5",
-    "jasmine": "^2.5.2"
-  }
+    "eslint": "^3.1.1",
+    "eslint-config-xo-space": "^0.15.0"
+  },
+  "repository" : {
+    "type" : "git",
+    "url" : "https://github.com/ramimoshe/generator-node-template"
+  },
+  "scripts": {
+    "test": ""
+  },
+  "license": "MIT"
 }
