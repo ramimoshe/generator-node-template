@@ -13,11 +13,11 @@ module.exports = generators.Base.extend({
 			var prompt = [{
 				type   : 'input',
 				name   : 'appName',
-				message: 'Enter app name (default: pug)'
+				message: 'Enter app name (default: my-service)'
 			}];
 
 			return this.prompt(prompt).then(function (response) {
-				this.options.appName = response.appName || "pug";
+				this.options.appName = response.appName || "my-service";
 			}.bind(this));
 		},
 		database           : function () {
@@ -238,21 +238,21 @@ function copyLint(lintOptions) {
 function copyPackageJson(options) {
 	let lintPackages = '';
 	if (options.eslint) {
-		lintPackages = '\n' + '\"eslint\": \"^3.10.2\",' + '\n' + '    \"eslint-config-airbnb\": \"^13.0.0\",' + '\n' + '    \"eslint-plugin-react\": \"^6.7.1\",';
+		lintPackages = '\"eslint\": \"^3.10.2\",' + '\n' + '    \"eslint-config-airbnb\": \"^13.0.0\",' + '\n' + '    \"eslint-plugin-react\": \"^6.7.1\",\n    ';
 	}
 
 	let dbPackages = '';
 	if (options.database === 'mongodb') {
-		dbPackages = '\n' + '\"mongoose\": \"^4.7.1\",'
+		dbPackages = '\n' + '    \"mongoose\": \"^4.7.1\",'
 	}
 
 	if (options.database === 'rethinkdb') {
-		dbPackages = '\n' + '\"rethinkdbdash\": \"2.2.18\",'
+		dbPackages = '\n' + '    \"rethinkdbdash\": \"2.2.18\",'
 	}
 
 	this.fs.copyTpl(
 		this.templatePath('package.json'),
 		this.destinationPath('package.json'),
-		{ lint: lintPackages, db: dbPackages }
+		{ lint: lintPackages, db: dbPackages, app_name: options.appName }
 	);
 }

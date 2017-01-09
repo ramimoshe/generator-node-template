@@ -1,11 +1,11 @@
 {
-  "name": "generator-hapijs",
-  "version": "0.0.0",
+  "name": "generator-node-template",
+  "version": "0.0.4",
   "description": "",
   "homepage": "",
   "author": {
     "name": "Rami Moshe",
-    "email": "rami.moshe@jivesoftware.com",
+    "email": "rms.rami.m@gmail.com",
     "url": ""
   },
   "files": [
@@ -13,7 +13,9 @@
   ],
   "main": "generators/index.js",
   "keywords": [
-    "",
+    "node.js",
+    "nodejs",
+    "template",
     "yeoman-generator"
   ],
   "dependencies": {
@@ -24,28 +26,17 @@
   "devDependencies": {
     "yeoman-test": "^1.0.0",
     "yeoman-assert": "^2.0.0",
+    "eslint-config-airbnb": "^13.0.0",
+    "eslint-plugin-react": "^6.7.1",
     "eslint": "^3.1.1",
-    "eslint-config-xo-space": "^0.15.0",
-    "gulp": "^3.9.0",
-    "gulp-eslint": "^3.0.1",
-    "gulp-exclude-gitignore": "^1.0.0",
-    "gulp-line-ending-corrector": "^1.0.1",
-    "gulp-istanbul": "^1.0.0",
-    "gulp-mocha": "^3.0.1",
-    "gulp-plumber": "^1.0.0",
-    "gulp-nsp": "^2.1.0",
-    "gulp-coveralls": "^0.1.0"
+    "eslint-config-xo-space": "^0.15.0"
   },
-  "eslintConfig": {
-    "extends": "xo-space",
-    "env": {
-      "mocha": true
-    }
+  "repository" : {
+    "type" : "git",
+    "url" : "https://github.com/ramimoshe/generator-node-template"
   },
-  "repository": "/generator-hapijs",
   "scripts": {
-    "prepublish": "gulp prepublish",
-    "test": "gulp"
+    "test": ""
   },
-  "license": "Apache-2.0"
+  "license": "MIT"
 }

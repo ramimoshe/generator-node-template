@@ -1,6 +1,9 @@
-# Pug
+# generator-node-template
 
-A Node.js service template generator for Yeoman based on [Hapi.js][hapijs].
+A Node.js service template generator for Yeoman based on hapi
+
+[![NPM Version][npm-image]][npm-url]
+[![NPM Downloads][downloads-image]][downloads-url]
 
 ### Tech
 ##### Database Options
@@ -15,6 +18,7 @@ A Node.js service template generator for Yeoman based on [Hapi.js][hapijs].
   - [Docker][docker]
  
 ##### Service Libraries
+  - [Hapi.js][hapijs] - A rich framework for building applications and services
   - [bluebird][bluebird] - Bluebird is a fully featured promise library with focus on innovative features and performance
   - [boom][boom] - HTTP-friendly error objects
   - [config][config] - Node-config organizes hierarchical configurations for your app deployments.
@@ -22,6 +26,10 @@ A Node.js service template generator for Yeoman based on [Hapi.js][hapijs].
   - [joi][joi] - Object schema description language and validator for JavaScript objects
   - [lodash][lodash] - A modern JavaScript utility library delivering modularity, performance & extras.
   - [winston][winston] - A multi-transport async logging library for node.js
+
+##### Process Manager
+  - [pm2][pm2] - Production process manager for Node.js apps with a built-in load balancer
+
 
 ##### Testing Libraries
   - [jasmine][jasmine] - A multi-transport async logging library for node.js
@@ -40,12 +48,12 @@ npm install -g yo
 
 Install the generator globally
 ```sh
-npm install -g NodeJs-Service-Generator
+npm install -g generator-node-template
 ```
 
-Run: pug and choose your preferences
+Run: generator-node-template and choose your preferences
 ```sh
-yo pug
+yo node-template
 ```
 
 ### Q&A
@@ -61,6 +69,10 @@ yo pug
    ```sh
    npm start
    ```
+- How to run the service using pm2
+  ```sh
+  pm2 start ecosystem.json --env={env_name}
+  ```
 - [How to work with several environment with config module][config-files]
 
 ### Development
@@ -72,7 +84,7 @@ Clone the repository and push your changes
 ### Todos
 
  - Add support of new databases
- - Add more tests examples with Sinon
+ - Add tests
  - Add support of new Lints
 
 License
@@ -81,6 +93,11 @@ License
 MIT
 
 [//]: # (These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax)
+   [npm-image]: https://img.shields.io/npm/v/generator-node-template.svg
+   [npm-url]: https://npmjs.org/package/generator-node-template
+   [downloads-image]: https://img.shields.io/npm/dm/generator-node-template.svg
+   [downloads-url]: https://npmjs.org/package/generator-node-template
+   
    [config-files]: <https://github.com/lorenwest/node-config/wiki/Configuration-Files>
    [hapi-swagger]: <https://github.com/glennjones/hapi-swagger>
    [joi]: <https://github.com/hapijs/joi>
@@ -101,4 +118,5 @@ MIT
    [rethinkdb]: <https://www.rethinkdb.com/>
    [hapijs]: <http://hapijs.com> 
    [node.js]: <http://nodejs.org>
+   [pm2]: <https://github.com/Unitech/pm2>
 
