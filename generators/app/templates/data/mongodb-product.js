@@ -7,20 +7,24 @@ const MODEL_NAME = 'Product';
 
 class Product {
 
-	convertResponse(documentPromise) {
+	static convertSingleItem(item) {
+		item._doc    = _.omit(item._doc, '__v');
+		item._doc.id = item._doc._id;
+		return _.omit(item._doc, '_id');
+	}
+
+	static convertResponse(documentPromise) {
 		// omit mongo doc version from the result
 		return documentPromise.then((document) => {
 			if (_.isArray(document)) {
-				return _.map(document, (item) => {
-					return _.omit(item._doc, '__v');
-				});
+				return _.map(document, Product.convertSingleItem);
 			}
 
-			return _.omit(document._doc, '__v');
+			return document ? Product.convertSingleItem(document) : document;
 		});
 	}
 
-	createSchema(mongoos) {
+	static createSchema(mongoos) {
 		const productSchema = new mongoos.Schema({
 			_id : String,
 			name: String
@@ -28,50 +32,50 @@ class Product {
 
 		productSchema.statics.findById = function findById(id, callback) {
 			return this.findOne({ _id: id }, callback);
-		}
+		};
 
 		productSchema.statics.findByName = function findByName(name, callback) {
 			return this.find({ name: name }, callback);
-		}
+		};
 
 		productSchema.statics.findAll = function findAll(callback) {
 			return this.find({}, callback);
-		}
+		};
 
 		return productSchema;
 	}
 
 	init(mongoose) {
-		this.product = mongoose.model(MODEL_NAME, this.createSchema(mongoose));
+		this.Product = mongoose.model(MODEL_NAME, Product.createSchema(mongoose));
 
 		return Promise.resolve();
 	}
 
 	get(id) {
-		const query = this.product.findById(id);
+		const query = this.Product.findById(id);
 
-		return this.convertResponse(query.exec());
+		return Product.convertResponse(query.exec());
 	}
 
 	getAll() {
-		const query = this.product.findAll();
+		const query = this.Product.findAll();
 
-		return this.convertResponse(query.exec());
+		return Product.convertResponse(query.exec());
 	}
 
 	searchByName(name) {
-		const query = this.product.findByName(name);
+		const query = this.Product.findByName(name);
 
-		return this.convertResponse(query.exec());
+		return Product.convertResponse(query.exec());
 	}
 
 	create(product) {
-		const productDal = new this.product({
+		const productDal = new this.Product({
 			_id : product.id,
 			name: product.name
 		});
 
-		return this.convertResponse(productDal.save());
+		return Product.convertResponse(productDal.save());
 	}
 }
 

@@ -56,6 +56,57 @@ Run: generator-node-template and choose your preferences
 yo node-template
 ```
 
+### Project Structure
+```bash
+.
+├── config
+│   ├── idefault.json
+│   ├── development.json
+│   ├── prod.json
+├── lib
+│   ├── server.js
+│   └── data
+│   └── api
+│   └── └── models
+│   └── ├── productsEndpoints.js
+│   └── ... // more endpoints
+│   └── infrastructure
+│   └── └── hapi
+│   └── └── ├── authenticationPlugin.js
+│   └── └── ├── extentions.js
+│   └── ├── logger.js
+│   └── logic
+│   └── ├── authentication.js
+│   └── ├── productsHandler.js
+├── tests
+│   └── integrations
+│   └── units
+├── index.js
+├── package.json
+└── readme.md
+```
+
+#### Database layer (lib/data)
+index.js file expose all db models and initialize them
+
+#### Logic layer (lib/logic)
+contains all logics code  for the endpoints 
+
+#### API layer (lib/api)
+contains all api models and endpoints defenitions
+
+#### Infrastructure code (lib/infrastructure)
+contains infrastructure code (e.g: logger)
+
+#### Authentication code (lib/logic/authentication.js)
+authentications.js contains authenticate function which will be called with the token value for each request
+
+#### Integration tests code (tests/integrations)
+contains all integration tests
+
+#### Units tests code (tests/units)
+contains all unit tests
+
 ### Q&A
 - How to run tests
    ```sh
@@ -84,7 +135,7 @@ Clone the repository and push your changes
 ### Todos
 
  - Add support of new databases
- - Add tests
+ - Add tests for the generator
  - Add support of new Lints
 
 License

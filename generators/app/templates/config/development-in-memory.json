@@ -1,0 +1,8 @@
+{
+  "service": {
+    "http": {
+      "port": 2222
+    },
+    "useAuth": false
+  }
+}

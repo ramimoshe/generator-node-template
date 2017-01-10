@@ -145,6 +145,17 @@ function copyConfigFiles(options) {
 		this.destinationPath('config/default.json')
 	);
 
+	if (options.database === 'none') {
+		this.fs.copy(
+			this.templatePath('config/development-in-memory.json'),
+			this.destinationPath('config/development.json')
+		);
+		this.fs.copy(
+			this.templatePath('config/prod-in-memory.json'),
+			this.destinationPath('config/prod.json')
+		);
+	}
+
 	if (options.database === 'rethinkdb') {
 		this.fs.copy(
 			this.templatePath('config/development-rethinkdb.json'),
@@ -169,6 +180,17 @@ function copyConfigFiles(options) {
 }
 
 function copyDbFiles(dbOptions) {
+	if (dbOptions === 'none') {
+		this.fs.copy(
+			this.templatePath('data/in-memory.js'),
+			this.destinationPath('lib/data/index.js')
+		);
+		this.fs.copy(
+			this.templatePath('data/in-memory-product.js'),
+			this.destinationPath('lib/data/Product.js')
+		);
+	}
+
 	if (dbOptions === 'rethinkdb') {
 		this.fs.copy(
 			this.templatePath('data/rethinkdb.js'),
@@ -182,14 +204,6 @@ function copyDbFiles(dbOptions) {
 			this.templatePath('data/rethinkdb-product.js'),
 			this.destinationPath('lib/data/Product.js')
 		);
-		this.fs.copy(
-			this.templatePath('config/development-rethinkdb.json'),
-			this.destinationPath('config/development.json')
-		);
-		this.fs.copy(
-			this.templatePath('config/prod-rethinkdb.json'),
-			this.destinationPath('config/prod.json')
-		);
 	}
 
 	if (dbOptions === 'mongodb') {
@@ -200,14 +214,6 @@ function copyDbFiles(dbOptions) {
 		this.fs.copy(
 			this.templatePath('data/mongodb-product.js'),
 			this.destinationPath('lib/data/Product.js')
-		);
-		this.fs.copy(
-			this.templatePath('config/development-mongodb.json'),
-			this.destinationPath('config/development.json')
-		);
-		this.fs.copy(
-			this.templatePath('config/prod-mongodb.json'),
-			this.destinationPath('config/prod.json')
 		);
 	}
 }
