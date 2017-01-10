@@ -1,4 +1,5 @@
 'use strict';
+
 const uuid = require('uuid');
 
 class productsHandler {
@@ -14,12 +15,12 @@ class productsHandler {
 	create(param) {
 		return this.productsRepository.create({
 			id  : uuid.v4(),
-			name: param.body.name,
+			name: param.body.name
 		});
 	}
 
 	search(param) {
-		if (param.query && param.query.name && param.query.name != '') {
+		if (param.query && param.query.name && param.query.name !== '') {
 			return this.productsRepository.searchByName(param.query.name);
 		}
 

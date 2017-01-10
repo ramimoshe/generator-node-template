@@ -1,7 +1,6 @@
 'use strict';
 
-const Boom = require('boom');
-const pkg  = require('../../../package.json');
+const pkg = require('../../../package.json');
 
 const SCHEMA_NAME = 'verifyToken';
 const internals   = {};
@@ -27,9 +26,12 @@ internals.implementation = (server, options) => {
 		}
 
 		const token = internals.getToken(request);
-		if (token === null) return reply(Boom.unauthorized('Token not found'));
-
-		return reply.continue({ credentials: token });
+		return options.authenticate(token)
+			.then(() => {
+				return reply.continue({ credentials: token });
+			}).catch((e) => {
+				return reply(e);
+			});
 	};
 
 	return response;

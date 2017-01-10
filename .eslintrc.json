@@ -20,7 +20,9 @@
     "no-param-reassign": "off",
     "object-shorthand": "off",
     "newline-per-chained-call": "off",
-    "no-restricted-syntax": ["error", "FunctionExpression", "WithStatement"],
+    "no-restricted-syntax": "off",
+    "global-require": "off",
+    "no-underscore-dangle": "off",
     "no-tabs": "off",
     "indent": [
       "error",

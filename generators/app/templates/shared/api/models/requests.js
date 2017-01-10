@@ -30,4 +30,4 @@ exports.searchProducts = {
 		name: Joi.string().min(1).max(50).optional()
 			.description('name of product')
 	}
-}
+};

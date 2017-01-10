@@ -3,6 +3,7 @@
 const Promise              = require('bluebird');
 const HapiSwagger          = require('hapi-swagger');
 const inert                = require('inert');
+const _                    = require('lodash');
 const vision               = require('vision');
 const logger               = require('../../infrastructure/logger');
 const authenticationPlugin = require('./authenticationPlugin');
@@ -12,7 +13,7 @@ function isDocsRoute(request) {
 	return request.path.substring(0, 5) === 'docs';
 }
 
-exports.addAuthentication = (hapiServer, config) => {
+exports.addAuthentication = (hapiServer, config, authenticationFunction) => {
 	const AUTH_STRATEGY_NAME = 'verifyToken';
 
 	return new Promise((resolve, reject) => {
@@ -21,8 +22,10 @@ exports.addAuthentication = (hapiServer, config) => {
 				if (err) {
 					reject(err);
 				}
-
-				hapiServer.auth.strategy(AUTH_STRATEGY_NAME, authenticationPlugin.schemaName, true, config);
+				// add authentication function to the config object in order to run in from the authentication middleware
+				const configWithAuthentication = _.merge({ authenticate: authenticationFunction }, config);
+				config.authenticationFunction  = authenticationFunction;
+				hapiServer.auth.strategy(AUTH_STRATEGY_NAME, authenticationPlugin.schemaName, true, configWithAuthentication);
 				resolve(hapiServer, AUTH_STRATEGY_NAME);
 			});
 	});
@@ -35,10 +38,10 @@ exports.addRoutesPlugin = (hapiServer, routesPlugin, pathPrefix) => {
 		register: routesPlugin
 	}, {
 		routes: {
-			prefix: '/' + pathPrefix
+			prefix: `/${pathPrefix}`
 		}
 	});
-}
+};
 
 exports.addLogging = (hapiServer) => {
 	return Promise.try(() => {

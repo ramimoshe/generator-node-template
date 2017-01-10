@@ -13,6 +13,6 @@ exports.init = (connectionConfig) => {
 	return Promise.all([
 		product.init(mongoose)
 	]);
-}
+};
 
 exports.product = product;

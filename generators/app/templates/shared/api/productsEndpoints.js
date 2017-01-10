@@ -2,7 +2,7 @@
 
 const requests        = require('./models/requests');
 const responses       = require('./models/responses');
-const productsHandler = require('../logic/productsHandler');
+const ProductsHandler = require('../logic/productsHandler');
 
 function convertRequestToHandlerParameter(request) {
 	return {
@@ -17,17 +17,19 @@ function convertRequestToHandlerParameter(request) {
 function handle(handler, request, reply) {
 	const handlerResult = handler(convertRequestToHandlerParameter(request));
 
-	if (handlerResult && handlerResult.then)
+	if (handlerResult && handlerResult.then) {
 		return handlerResult.then(reply);
+	}
 
-	if (handlerResult && handlerResult.catch)
+	if (handlerResult && handlerResult.catch) {
 		return handlerResult.catch(reply);
+	}
 
-	reply(handlerResult);
+	return reply(handlerResult);
 }
 
-exports.register = function (server, options, next) {
-	const products = new productsHandler();
+exports.register = (server, options, next) => {
+	const products = new ProductsHandler();
 
 	server.route({
 		path  : '/{id}',
