@@ -2,6 +2,8 @@
 
 A Node.js service template generator for Yeoman based on hapi
 
+Choose your tech stack and create node.js template of api service
+
 [![NPM Version][npm-image]][npm-url]
 [![NPM Downloads][downloads-image]][downloads-url]
 
@@ -131,6 +133,13 @@ contains all unit tests
 Want to contribute? Great!
 Clone the repository and push your changes
 
+#### How to run it locally
+Run the following command on the root project
+```sh
+npm link
+```
+
+Then every time when you run the install command it will take it from your local source code
 
 ### Todos
 
