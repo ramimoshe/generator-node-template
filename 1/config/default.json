@@ -1,0 +1,25 @@
+{
+  "docs": {
+    "info": {
+      "title": "Service API",
+      "description": "Powered by NodeJs-Service-Template",
+      "version": "2.0"
+    },
+    "documentationPath": "/docs",
+    "jsonEditor": true,
+    "securityDefinitions": {
+      "Bearer": {
+        "type": "apiKey",
+        "name": "authorization",
+        "in": "header"
+      }
+    },
+    "security": [
+      {
+        "Bearer": []
+      }
+    ]
+  },
+  "defaultMessagePrefix": "Hello",
+  "includeStackOnErrorResponse": true
+}
