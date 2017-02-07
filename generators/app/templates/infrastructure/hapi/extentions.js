@@ -7,7 +7,7 @@ const _                    = require('lodash');
 const vision               = require('vision');
 const logger               = require('../../infrastructure/logger');
 const authenticationPlugin = require('./authenticationPlugin');
-
+<%- additionalRequired%>
 
 function isDocsRoute(request) {
 	return request.path.substring(0, 5) === 'docs';
@@ -30,6 +30,7 @@ exports.addAuthentication = (hapiServer, config, authenticationFunction) => {
 			});
 	});
 };
+<%- extentions%>
 
 exports.addRoutesPlugin = (hapiServer, routesPlugin, pathPrefix) => {
 	const register = Promise.promisify(hapiServer.register).bind(hapiServer);

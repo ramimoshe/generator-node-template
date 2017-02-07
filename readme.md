@@ -12,6 +12,9 @@ Choose your tech stack and create node.js template of api service
   - [Rethinkdb][rethinkdb] with [RethinkDbDash][rethinkdbdash] as a node.js driver
   - [MongoDB][mongodb] with [mongoose][mongodb-driver] as a node.js driver
 
+##### Front-end Integration Option With
+  - [handlebars][handlebars] - Handlebars provides the power necessary to let you build semantic templates effectively with no frustration.
+
 ##### Lint Options
   - [ESLint][eslint]
   - [JSHint][jshint]
@@ -32,7 +35,6 @@ Choose your tech stack and create node.js template of api service
 ##### Process Manager
   - [pm2][pm2] - Production process manager for Node.js apps with a built-in load balancer
 
-
 ##### Testing Libraries
   - [jasmine][jasmine] - A multi-transport async logging library for node.js
   - [istanbul][istanbul] - A JS code coverage tool written in JS
@@ -43,7 +45,7 @@ Choose your tech stack and create node.js template of api service
 
 The output service template supported [Node.js](https://nodejs.org/) v4+.
 
-Make sure you have yo installed: npm install -g yo
+Make sure you have yo installed
 ```sh
 npm install -g yo
 ```
@@ -78,8 +80,10 @@ yo node-template
 │   └── └── ├── extentions.js
 │   └── ├── logger.js
 │   └── logic
-│   └── ├── authentication.js
 │   └── ├── productsHandler.js
+│   └── ├── authentication.js
+├── templates
+├── public
 ├── tests
 │   └── integrations
 │   └── units
@@ -179,4 +183,5 @@ MIT
    [hapijs]: <http://hapijs.com> 
    [node.js]: <http://nodejs.org>
    [pm2]: <https://github.com/Unitech/pm2>
+   [handlebars]: <http://handlebarsjs.com/>
 

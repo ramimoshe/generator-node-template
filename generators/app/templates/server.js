@@ -31,7 +31,7 @@ function initHttpServer(hapiServer) {
 	const routesPrefix = 'api/products';
 
 	return Promise.all([
-		hapiExtensions.addRoutesPlugin(apiConnection, productsEndpoints, routesPrefix)
+		hapiExtensions.addRoutesPlugin(apiConnection, productsEndpoints, routesPrefix)<%- viewRoutes%>
 			.then(() => hapiExtensions.addLogging(apiConnection))
 			.then(() => hapiExtensions.addAuthentication(apiConnection, getAuthenticationConfig(), authentication.authenticate.bind(authentication)))
 			.then(() => hapiExtensions.addMoreErrorsDetailsInResponse(apiConnection, config.includeStackOnErrorResponse))

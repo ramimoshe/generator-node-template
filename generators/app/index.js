@@ -1,6 +1,7 @@
 'use strict';
 
 const generators = require('yeoman-generator');
+const fs         = require('fs');
 
 
 module.exports = generators.Base.extend({
@@ -38,12 +39,24 @@ module.exports = generators.Base.extend({
 				this.options.database = response.database.toLowerCase();
 			}.bind(this));
 		},
+		view               : function () {
+
+			var prompt = [{
+				type   : 'confirm',
+				name   : 'view',
+				message: 'Will your service include UI (html, css ...)?'
+			}];
+
+			return this.prompt(prompt).then(function (response) {
+				this.options.view = response.view;
+			}.bind(this));
+		},
 		eslint             : function () {
 
 			var prompt = [{
 				type   : 'confirm',
 				name   : 'eslint',
-				message: 'Do you want to use ESLint:'
+				message: 'Do you want to use ESLint?'
 			}];
 
 			return this.prompt(prompt).then(function (response) {
@@ -55,7 +68,7 @@ module.exports = generators.Base.extend({
 			const prompt = [{
 				type   : 'confirm',
 				name   : 'docker',
-				message: 'Do you want to use Docker:'
+				message: 'Do you want to use Docker?'
 			}];
 
 			return this.prompt(prompt).then(function (response) {
@@ -66,7 +79,7 @@ module.exports = generators.Base.extend({
 			const prompt = [{
 				type   : 'confirm',
 				name   : 'pm2',
-				message: 'Do you want to use pm2:'
+				message: 'Do you want to use pm2?'
 			}];
 
 			return this.prompt(prompt).then(function (response) {
@@ -78,7 +91,7 @@ module.exports = generators.Base.extend({
 			const prompt = [{
 				type   : 'confirm',
 				name   : 'installDependencies',
-				message: 'Do you want to install dependencies:'
+				message: 'Do you want to install dependencies?'
 			}];
 
 			return this.prompt(prompt).then(function (response) {
@@ -93,6 +106,7 @@ module.exports = generators.Base.extend({
 			this.destinationRoot(this.options.appName);
 
 			copyServiceFiles.call(this);
+			copyViewFiles.call(this, this.options.view);
 			copyDbFiles.call(this, this.options.database);
 			copyConfigFiles.call(this, this.options);
 			copyDocker.call(this, this.options.docker);
@@ -137,6 +151,46 @@ function copyServiceFiles() {
 		this.templatePath('tests'),
 		this.destinationPath('tests')
 	);
+}
+
+function copyViewFiles(viewOptions) {
+	if (viewOptions) {
+		this.fs.copy(
+			this.templatePath('view/public'),
+			this.destinationPath('public')
+		);
+		this.fs.copy(
+			this.templatePath('view/templates'),
+			this.destinationPath('templates')
+		);
+		this.fs.copyTpl(
+			this.templatePath('infrastructure/hapi/extentions.js'),
+			this.destinationPath('lib/infrastructure/hapi/extentions.js'), {
+				extentions        : '\n' + fs.readFileSync(this.templatePath('infrastructure/hapi/extentions-with-view.js')),
+				additionalRequired: 'const path                 = require(\'path\');' + '\n'
+			}
+		);
+		this.fs.copyTpl(
+			this.templatePath('server.js'),
+			this.destinationPath('lib/server.js'), {
+				viewRoutes: '\n\t\t\t' + '.then(() => hapiExtensions.addViewsRoutesPlugin(apiConnection))'
+			}
+		);
+	} else {
+		this.fs.copyTpl(
+			this.templatePath('infrastructure/hapi/extentions.js'),
+			this.destinationPath('lib/infrastructure/hapi/extentions.js'), {
+				extentions        : '',
+				additionalRequired: ''
+			}
+		);
+		this.fs.copyTpl(
+			this.templatePath('server.js'),
+			this.destinationPath('lib/server.js'), {
+				viewRoutes: ''
+			}
+		);
+	}
 }
 
 function copyConfigFiles(options) {
@@ -222,8 +276,9 @@ function copyPm2(pm2Options, appName) {
 	if (pm2Options) {
 		this.fs.copyTpl(
 			this.templatePath('pm2/ecosystem.json'),
-			this.destinationPath('ecosystem.json'),
-			{ app_name: appName }
+			this.destinationPath('ecosystem.json'), {
+				app_name: appName
+			}
 		);
 	}
 }
@@ -256,9 +311,18 @@ function copyPackageJson(options) {
 		dbPackages = '\n' + '    \"rethinkdbdash\": \"2.2.18\",'
 	}
 
+	let viewPackages = '';
+	if (options.view) {
+		viewPackages = '\n' + '    \"handlebars\": \"^4.0.6\",'
+	}
+
 	this.fs.copyTpl(
 		this.templatePath('package.json'),
-		this.destinationPath('package.json'),
-		{ lint: lintPackages, db: dbPackages, app_name: options.appName }
+		this.destinationPath('package.json'), {
+			lint    : lintPackages,
+			db      : dbPackages,
+			app_name: options.appName,
+			view    : viewPackages
+		}
 	);
 }
