@@ -159,7 +159,7 @@ MIT
 [//]: # (These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax)
    [npm-image]: https://img.shields.io/npm/v/generator-node-template.svg
    [npm-url]: https://npmjs.org/package/generator-node-template
-   [downloads-image]: https://img.shields.io/npm/dm/generator-node-template.svg
+   [downloads-image]: https://img.shields.io/npm/dt/generator-node-template.svg
    [downloads-url]: https://npmjs.org/package/generator-node-template
    
    [config-files]: <https://github.com/lorenwest/node-config/wiki/Configuration-Files>
