@@ -7,6 +7,8 @@ Choose your tech stack and create node.js template of api service
 [![NPM Version][npm-image]][npm-url]
 [![NPM Downloads][downloads-image]][downloads-url]
 
+![alt tag](https://github.com/ramimoshe/generator-node-template/blob/master/resources/animations/overview.gif?raw=true)
+
 ### Tech
 ##### Database Options
   - [Rethinkdb][rethinkdb] with [RethinkDbDash][rethinkdbdash] as a node.js driver
